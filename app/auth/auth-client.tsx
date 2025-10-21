@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { z } from "zod";
 import { signIn, signInSocial, signUp } from "../../lib/actions/auth-action";
-import {z} from "zod";
-import { signUpSchema,loginSchema } from "../../lib/schemas";
+import { loginSchema, signUpSchema } from "../../lib/schemas";
 
 export default function AuthClientPage() {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -28,7 +28,7 @@ export default function AuthClientPage() {
       setError(
         `Error authenticating with ${provider}: ${
           err instanceof Error ? err.message : "Unknown error"
-        }`
+        }`,
       );
     } finally {
       setIsLoading(false);
@@ -40,7 +40,6 @@ export default function AuthClientPage() {
     setIsLoading(true);
     setError("");
 
-
     try {
       if (isSignIn) {
         loginSchema.parse({ email, password });
@@ -51,6 +50,7 @@ export default function AuthClientPage() {
       } else {
         signUpSchema.parse({ name, email, password });
         const result = await signUp(email, password, name);
+        setIsSignIn(true);
         if (!result.user) {
           setError("Failed to create account");
         }
@@ -58,15 +58,15 @@ export default function AuthClientPage() {
     } catch (err) {
       if (err instanceof z.ZodError) {
         setError(err.message);
-          
+
         return;
+      } else {
+        setError(
+          `Authentication error: ${
+            err instanceof Error ? err.message : "Unknown error"
+          }`,
+        );
       }
-      else{
-      setError(
-        `Authentication error: ${
-          err instanceof Error ? err.message : "Unknown error"
-        }`
-      );}
     } finally {
       setIsLoading(false);
     }
@@ -83,7 +83,7 @@ export default function AuthClientPage() {
             <p className="text-gray-600">
               {isSignIn
                 ? "Cadastre sua conta para continuar"
-                :  "Realize o cadastro para continuar"}
+                : "Realize o cadastro para continuar"}
             </p>
           </div>
 
@@ -165,7 +165,7 @@ export default function AuthClientPage() {
             </div>
             <div className="relative flex justify-center text-sm">
               <span className="px-2 bg-gradient-to-br from-blue-50 to-indigo-100 text-gray-500">
-                ou 
+                ou
               </span>
             </div>
           </div>

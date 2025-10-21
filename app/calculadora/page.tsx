@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { listContaminants, getRfD } from "../../lib/contaminants";
 import { calculateRisk } from "../../lib/calculator";
-import { IntakeParameters, RiskResult } from "../../lib/types/types";
+import { getRfD, listContaminants } from "../../lib/contaminants";
+import type { IntakeParameters, RiskResult } from "../../lib/types/types";
 
-export default function Calculadora(){
- const [contaminant, setContaminant] = useState("");
+export default function Calculadora() {
+  const [contaminant, setContaminant] = useState("");
   const [cValue, setCValue] = useState("");
   const [irValue, setIrValue] = useState("");
   const [efValue, setEfValue] = useState("");
@@ -52,7 +52,6 @@ export default function Calculadora(){
 
   return (
     <main className=" shadow-2xs flex-auto bg-green-900 duration-300 p-9 w-auto h-auto">
-      
       <div className=" bg-gray-100 rounded-2xl shadow-xl p-8 border border-lime-600 sm:w-3/4 lg:w-1/2 mx-auto">
         <h1 className="text-center text-gray-700 text-2xl font-bold mb-6">
           Calculadora de Risco Não-Cancerígeno
@@ -80,11 +79,25 @@ export default function Calculadora(){
           </select>
         </div>
 
-        
         {[
-          { id: "C", label: "C (mg/L ou mg/kg):", value: cValue, set: setCValue },
-          { id: "IR", label: "IR (L/dia ou kg/dia):", value: irValue, set: setIrValue },
-          { id: "EF", label: "EF (dias/ano):", value: efValue, set: setEfValue },
+          {
+            id: "C",
+            label: "C (mg/L ou mg/kg):",
+            value: cValue,
+            set: setCValue,
+          },
+          {
+            id: "IR",
+            label: "IR (L/dia ou kg/dia):",
+            value: irValue,
+            set: setIrValue,
+          },
+          {
+            id: "EF",
+            label: "EF (dias/ano):",
+            value: efValue,
+            set: setEfValue,
+          },
           { id: "ED", label: "ED (anos):", value: edValue, set: setEdValue },
           { id: "BW", label: "BW (kg):", value: bwValue, set: setBwValue },
           { id: "AT", label: "AT (dias):", value: atValue, set: setAtValue },
@@ -115,14 +128,14 @@ export default function Calculadora(){
           Calcular
         </button>
 
-        
         {result && (
           <div className="mt-6 p-4 bg-white border border-lime-600 rounded-lg transition-colors duration-300">
             <h3 className="text-gray-700 font-bold mb-2">
               Resultado da Análise:
             </h3>
             <p>
-              <strong>Ingestão (I):</strong> {result.I.toExponential(4)} mg/(kg·dia)
+              <strong>Ingestão (I):</strong> {result.I.toExponential(4)}{" "}
+              mg/(kg·dia)
             </p>
             <p>
               <strong>Quociente de Risco (QR):</strong> {result.QR.toFixed(4)}
@@ -135,6 +148,4 @@ export default function Calculadora(){
       </div>
     </main>
   );
-
-
 }
