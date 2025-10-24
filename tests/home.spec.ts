@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 // --- ATENÇÃO ---
 // Defina a URL base do seu projeto.
 // Se estiver rodando localmente, será algo como 'http://localhost:3000'
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "http://localhost:3000";
 
 test("Fluxo de navegação principal (Início, Calculadora, Perfil)", async ({
   page,
