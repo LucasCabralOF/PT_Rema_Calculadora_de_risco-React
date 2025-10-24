@@ -73,7 +73,7 @@ export default function AuthClientPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-lime-100 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-t from-white to-lime-100 flex flex-col">
       <div className="flex items-center justify-center p-4 pt-20">
         <div className="max-w-md w-full space-y-8">
           <div className="text-center">

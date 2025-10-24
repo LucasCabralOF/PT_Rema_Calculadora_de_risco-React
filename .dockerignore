@@ -1,0 +1,20 @@
+# .dockerignore
+
+# Dependências
+node_modules
+
+# Build cache
+.next
+
+# Arquivos de ambiente (NUNCA coloque no Docker)
+.env
+.env.local
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+entrypoint.sh

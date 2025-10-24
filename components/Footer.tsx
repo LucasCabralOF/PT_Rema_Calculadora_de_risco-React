@@ -32,8 +32,7 @@ function Footer() {
         </div>
       </div>
       <p className="text-white text-center text-sm mt-10">
-        © 2024 REMA - Núcleo de Estudos e Pesquisas em Riscos Ambientais. Todos
-        os direitos reservados.
+        © REMA - Núcleo Ressacada de Pesquisa em Meio Ambiente
       </p>
     </div>
   );

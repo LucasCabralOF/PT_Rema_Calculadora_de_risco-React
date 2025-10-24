@@ -30,7 +30,7 @@ export default async function RootLayout({
     headers: await headers(),
   });
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
