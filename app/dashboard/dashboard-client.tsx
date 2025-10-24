@@ -26,9 +26,7 @@ export default function DashboardClientPage({ session }: { session: Session }) {
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
                   Bem vindo a seu Perfil
                 </h2>
-                <p className="text-gray-600">
-                  Gerencia sua conta
-                </p>
+                <p className="text-gray-600">Gerencia sua conta</p>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="flex items-center space-x-3">
@@ -45,7 +43,6 @@ export default function DashboardClientPage({ session }: { session: Session }) {
                 </button>
               </div>
             </div>
-
 
             {/* Demo Features */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -126,9 +123,7 @@ export default function DashboardClientPage({ session }: { session: Session }) {
 
             {/* Demo Actions */}
             <div className="mt-8 p-6 bg-gray-50 rounded-lg">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
-                Opções
-              </h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-4">Opções</h3>
               <div className="flex flex-wrap gap-3">
                 <button
                   onClick={() => alert("Mock action: Profile updated!")}

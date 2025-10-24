@@ -15,24 +15,20 @@ export default function Calculadora() {
   const [atValue, setAtValue] = useState("");
   const [result, setResult] = useState<RiskResult | null>(null);
 
-  
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  
   const allContaminants = useMemo(() => listContaminants(), []);
 
-  
   const filteredContaminants = useMemo(() => {
     if (contaminant === "") {
       // Se o campo estiver vazio, mostre a lista completa
       return allContaminants;
     }
-  
+
     return allContaminants.filter((name) =>
       name.toLowerCase().includes(contaminant.toLowerCase()),
     );
   }, [contaminant, allContaminants]);
-  
 
   const handleCalculate = () => {
     if (!contaminant) {
@@ -61,7 +57,6 @@ export default function Calculadora() {
 
     const rfd = getRfD(contaminant);
     if (!rfd) {
-    
       alert(`Erro: O contaminante "${contaminant}" não foi encontrado.`);
       return;
     }
@@ -72,15 +67,13 @@ export default function Calculadora() {
 
   return (
     <main className="min-h-screen bg-gradient-to-t from-white to-lime-100 flex flex-col py-10">
-      <div className=" bg-gray-100 rounded-2xl shadow-xl p-8 border border-lime-600 sm:w-3/4 lg:w-1/2 mx-auto">
+      <div className=" bg-white rounded-lg shadow p-6  sm:w-3/4 lg:w-1/2 mx-auto">
         <h1 className="text-center text-gray-700 text-2xl font-bold mb-6">
           Calculadora de Risco Não-Cancerígeno
         </h1>
 
-        
         <div className="mb-4 relative">
           {" "}
-         
           <label
             htmlFor="contaminant"
             className="block mb-2 font-semibold text-gray-700"
@@ -97,14 +90,12 @@ export default function Calculadora() {
             }}
             onFocus={() => setIsDropdownOpen(true)}
             onBlur={() => {
-             
               setTimeout(() => setIsDropdownOpen(false), 200);
             }}
             placeholder="Digite para buscar..."
-            autoComplete="off" 
+            autoComplete="off"
             className="w-full px-3 py-2 border text-black border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-colors"
           />
-          
           {isDropdownOpen && (
             <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
               {filteredContaminants.length > 0 ? (
@@ -112,7 +103,6 @@ export default function Calculadora() {
                   <li
                     key={name}
                     className="px-4 py-2 text-black hover:bg-lime-100 cursor-pointer"
-                    
                     onMouseDown={() => {
                       setContaminant(name);
                       setIsDropdownOpen(false);
@@ -129,7 +119,6 @@ export default function Calculadora() {
             </ul>
           )}
         </div>
-        
 
         {[
           {

@@ -16,32 +16,43 @@ export default function Navigation({ session }: { session: Session | null }) {
     <nav className="w-screen bg-white shadow">
       <div className="flex justify-between items-center px-25 py-3 border-b border-lime-600 text-xs text-gray-600">
         <div className="flex items-center gap-4">
-          <a href="tel:+554837212132" className="flex items-center gap-1 hover:text-green-600">
+          <a
+            href="tel:+554837212132"
+            className="flex items-center gap-1 hover:text-green-600"
+          >
             <Phone size={12} /> +55 48 3721-2132
           </a>
           <span>|</span>
-          <a href="mailto:contato@rema.ufsc.br" className="flex items-center gap-1 hover:text-green-600">
+          <a
+            href="mailto:contato@rema.ufsc.br"
+            className="flex items-center gap-1 hover:text-green-600"
+          >
             <Mail size={12} /> contato@rema.ufsc.br
           </a>
         </div>
         <div className="flex items-center gap-3 text-gray-400">
-          <Link href="#"><Mail size={16} /></Link>
+          <Link href="#">
+            <Mail size={16} />
+          </Link>
         </div>
       </div>
 
       <div className="flex items-center justify-between px-25 py-3">
         <Link href="/">
-          <Image src="/logo.png" alt="Logo Rema" width={250} height={100} className="hover:shadow-2xl duration-300 "/>
+          <Image
+            src="/logo.png"
+            alt="Logo Rema"
+            width={250}
+            height={100}
+            className="hover:shadow-2xl duration-300 "
+          />
         </Link>
 
         <div className="flex items-center gap-6 text-lg font-normal tracking-widest">
-          <Link
-            href="/"
-            className="text-gray-700 hover:text-lime-700 "
-          >
+          <Link href="/" className="text-gray-700 hover:text-lime-700 ">
             Início
           </Link>
-       
+
           <Link
             href="/calculadora"
             className="text-gray-700 hover:text-lime-700 "

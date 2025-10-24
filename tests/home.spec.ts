@@ -21,7 +21,9 @@ test("Fluxo de navegação principal (Início, Calculadora, Perfil)", async ({
 
   // 4. Verificar se entrou na página da calculadora
   await expect(
-    page.getByRole("heading", { name: /Calculadora de Risco Não-Cancerígeno/i }),
+    page.getByRole("heading", {
+      name: /Calculadora de Risco Não-Cancerígeno/i,
+    }),
   ).toBeVisible();
   await expect(page).toHaveURL(BASE_URL + "/calculadora");
 
