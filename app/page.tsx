@@ -2,9 +2,8 @@
 
 export default function CalculatorPage() {
   return (
-    // Usei o mesmo gradiente da sua página de calculadora
     <main className="min-h-screen bg-gradient-to-t from-white to-lime-100 flex flex-col py-10 px-4">
-      {/* Usei o mesmo estilo de 'card' da sua calculadora */}
+    
       <div className="max-w-3xl bg-gray-100 rounded-2xl shadow-xl p-8 border border-lime-600 mx-auto">
         <h1 className="text-center text-gray-800 text-3xl font-bold mb-8">
           Sobre a Calculadora de Risco
@@ -19,7 +18,7 @@ export default function CalculatorPage() {
           O processo de cálculo é dividido em duas etapas principais.
         </p>
 
-        {/* --- ETAPA 1 --- */}
+       
         <div className="mb-6 p-5 bg-white rounded-lg border">
           <h2 className="text-2xl font-semibold text-lime-700 mb-3">
             Passo 1: Cálculo da Ingestão (I)
@@ -30,7 +29,7 @@ export default function CalculatorPage() {
             fórmula utilizada é:
           </p>
           <div className="text-center bg-gray-50 p-4 rounded-md my-4 overflow-x-auto">
-            {/* --- CORREÇÃO AQUI --- */}
+          
             <code className="text-lg text-gray-800 font-mono">
               I = C * (IR * EF * ED) / (BW * AT)
             </code>
@@ -61,7 +60,7 @@ export default function CalculatorPage() {
           </ul>
         </div>
 
-        {/* --- ETAPA 2 --- */}
+      }
         <div className="mb-6 p-5 bg-white rounded-lg border">
           <h2 className="text-2xl font-semibold text-lime-700 mb-3">
             Passo 2: Quociente de Risco (QR)
@@ -73,7 +72,7 @@ export default function CalculatorPage() {
             contaminante.
           </p>
           <div className="text-center bg-gray-50 p-4 rounded-md my-4">
-            {/* --- CORREÇÃO AQUI --- */}
+            
             <code className="text-lg text-gray-800 font-mono">QR = I / RfD</code>
           </div>
           <p className="text-gray-700">
@@ -85,7 +84,7 @@ export default function CalculatorPage() {
           </p>
         </div>
 
-        {/* --- CONCLUSÃO --- */}
+        
         <div>
           <h2 className="text-2xl font-semibold text-gray-800 mb-3">
             Resultado
@@ -95,7 +94,7 @@ export default function CalculatorPage() {
             Quociente de Risco (QR). A interpretação é direta:
           </p>
           <div className="bg-lime-50 border-l-4 border-lime-500 p-4 rounded-r-lg">
-            {/* --- CORREÇÃO AQUI --- */}
+          
             <p className="font-semibold text-lime-800 text-lg">
               Se QR for maior que  1, existe um potencial risco à saúde.
             </p>
