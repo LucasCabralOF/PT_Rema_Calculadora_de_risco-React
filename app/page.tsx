@@ -60,7 +60,7 @@ export default function CalculatorPage() {
           </ul>
         </div>
 
-      }
+      
         <div className="mb-6 p-5 bg-white rounded-lg border">
           <h2 className="text-2xl font-semibold text-lime-700 mb-3">
             Passo 2: Quociente de Risco (QR)
