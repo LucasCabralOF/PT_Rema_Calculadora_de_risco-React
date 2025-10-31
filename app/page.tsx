@@ -1,5 +1,4 @@
-import {Divider} from "antd";
-
+import { Divider } from "antd";
 
 export default function CalculatorPage() {
   return (

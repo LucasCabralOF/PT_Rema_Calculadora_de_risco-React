@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-
 export const signUpSchema = z.object({
   name: z
     .string()
@@ -13,10 +12,9 @@ export const signUpSchema = z.object({
 
 export const loginSchema = z.object({
   email: z.email({ message: "Por favor, insira um e-mail válido." }),
-  
+
   password: z.string().min(1, { message: "A senha é obrigatória." }),
 });
-
 
 export const calculatorInputSchema = z.object({
   contaminant: z.string().min(1, { message: "Selecione um contaminante." }),

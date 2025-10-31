@@ -25,10 +25,10 @@ export default defineConfig({
   reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-  baseURL: 'http://localhost:3000',
-  headless: true,
-  trace: 'retain-on-failure',
-},
+    baseURL: "http://localhost:3000",
+    headless: true,
+    trace: "retain-on-failure",
+  },
 
   /* Configure projects for major browsers */
   projects: [

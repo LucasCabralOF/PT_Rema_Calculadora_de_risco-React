@@ -7,7 +7,6 @@ import { getRfD, listContaminants } from "../../lib/contaminants";
 import type { IntakeParameters, RiskResult } from "../../lib/types/types";
 import { calculatorInputSchema } from "../../lib/schemas";
 
-
 export default function Calculadora() {
   const [contaminant, setContaminant] = useState("");
   const [cValue, setCValue] = useState("");
@@ -25,7 +24,7 @@ export default function Calculadora() {
   const filteredContaminants = useMemo(() => {
     if (contaminant === "") return allContaminants;
     return allContaminants.filter((name) =>
-      name.toLowerCase().includes(contaminant.toLowerCase())
+      name.toLowerCase().includes(contaminant.toLowerCase()),
     );
   }, [contaminant, allContaminants]);
 
@@ -44,11 +43,11 @@ export default function Calculadora() {
     });
 
     if (!parsed.success) {
-  const issues = parsed.error?.issues ?? [];
-  const messages = issues.map((err) => err.message);
-  setError(messages.join("\n") || "Erro de validação nos campos.");
-  return;
-}
+      const issues = parsed.error?.issues ?? [];
+      const messages = issues.map((err) => err.message);
+      setError(messages.join("\n") || "Erro de validação nos campos.");
+      return;
+    }
 
     const { contaminant: cont, ...params } = parsed.data;
 
@@ -137,15 +136,33 @@ export default function Calculadora() {
 
         {/* Campos numéricos */}
         {[
-          { id: "C", label: "C (mg/L ou mg/kg):", value: cValue, set: setCValue },
-          { id: "IR", label: "IR (L/dia ou kg/dia):", value: irValue, set: setIrValue },
-          { id: "EF", label: "EF (dias/ano):", value: efValue, set: setEfValue },
+          {
+            id: "C",
+            label: "C (mg/L ou mg/kg):",
+            value: cValue,
+            set: setCValue,
+          },
+          {
+            id: "IR",
+            label: "IR (L/dia ou kg/dia):",
+            value: irValue,
+            set: setIrValue,
+          },
+          {
+            id: "EF",
+            label: "EF (dias/ano):",
+            value: efValue,
+            set: setEfValue,
+          },
           { id: "ED", label: "ED (anos):", value: edValue, set: setEdValue },
           { id: "BW", label: "BW (kg):", value: bwValue, set: setBwValue },
           { id: "AT", label: "AT (dias):", value: atValue, set: setAtValue },
         ].map(({ id, label, value, set }) => (
           <div key={id} className="mb-4">
-            <label htmlFor={id} className="block mb-2 font-semibold text-gray-700">
+            <label
+              htmlFor={id}
+              className="block mb-2 font-semibold text-gray-700"
+            >
               {label}
             </label>
             <input
@@ -183,7 +200,8 @@ export default function Calculadora() {
               Resultado da Análise:
             </h3>
             <p>
-              <strong>Ingestão (I):</strong> {result.I.toExponential(4)} mg/(kg·dia)
+              <strong>Ingestão (I):</strong> {result.I.toExponential(4)}{" "}
+              mg/(kg·dia)
             </p>
             <p>
               <strong>Quociente de Risco (QR):</strong> {result.QR.toFixed(4)}

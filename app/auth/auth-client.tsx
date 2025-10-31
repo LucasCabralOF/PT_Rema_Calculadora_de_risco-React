@@ -5,7 +5,7 @@ import { useState } from "react";
 import { z } from "zod";
 import { signIn, signInSocial, signUp } from "../../lib/actions/auth-action";
 import { loginSchema, signUpSchema } from "../../lib/schemas";
-import {Divider} from "antd";
+import { Divider } from "antd";
 
 export default function AuthClientPage() {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -58,9 +58,9 @@ export default function AuthClientPage() {
       }
     } catch (err) {
       if (err instanceof z.ZodError) {
-      const issues = err.issues ?? []; 
-      const messages = issues.map((err) => err.message);
-      setError(issues[0]?.message || "Erro de validação");
+        const issues = err.issues ?? [];
+        const messages = issues.map((err) => err.message);
+        setError(issues[0]?.message || "Erro de validação");
 
         return;
       } else {
@@ -162,7 +162,7 @@ export default function AuthClientPage() {
             </button>
           </div>
 
-          <Divider style={{ borderColor: "black"}} > Ou </Divider>
+          <Divider style={{ borderColor: "black" }}> Ou </Divider>
 
           {/* Email/Password Form */}
           <form onSubmit={handleEmailAuth} className="space-y-4">
