@@ -1,4 +1,5 @@
-"use client";
+import {Divider} from "antd";
+
 
 export default function CalculatorPage() {
   return (
@@ -13,6 +14,7 @@ export default function CalculatorPage() {
           <strong>risco não-cancerígeno</strong> à saúde humana decorrente da
           exposição a contaminantes.
         </p>
+        <Divider></Divider>
         <p className="text-gray-700 mb-6">
           O processo de cálculo é dividido em duas etapas principais.
         </p>

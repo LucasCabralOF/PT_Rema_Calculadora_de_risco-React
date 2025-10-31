@@ -14,8 +14,8 @@ export default function Navigation({ session }: { session: Session | null }) {
 
   return (
     <nav className="w-screen bg-white shadow">
-      <div className="flex justify-between items-center px-25 py-3 border-b border-lime-600 text-xs text-gray-600">
-        <div className="flex items-center gap-4">
+      <div className="flex justify-between items-center px-5 py-3 border-b border-lime-600 text-xs text-gray-600 md:px-25 ">
+        <div className="flex items-center gap-4 ">
           <a
             href="tel:+554837212132"
             className="flex items-center gap-1 hover:text-green-600"
@@ -31,7 +31,7 @@ export default function Navigation({ session }: { session: Session | null }) {
           </a>
         </div>
         <div className="flex items-center gap-3 text-gray-400">
-          <Link href="#">
+          <Link href="mailto:contato@rema.ufsc.br">
             <Mail size={16} />
           </Link>
         </div>
@@ -58,6 +58,12 @@ export default function Navigation({ session }: { session: Session | null }) {
             className="text-gray-700 hover:text-lime-700 "
           >
             calculadora
+          </Link>
+          <Link
+            href="https://rema.ufsc.br/quem-somos"
+            className="text-gray-700 hover:text-lime-700 "
+          >
+            Quem somos
           </Link>
 
           {session ? (

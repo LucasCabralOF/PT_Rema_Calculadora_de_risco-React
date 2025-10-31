@@ -1,9 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react"; // 1. Importe o useMemo
+import { useState, useMemo } from "react";
+import { z } from "zod";
 import { calculateRisk } from "../../lib/calculator";
 import { getRfD, listContaminants } from "../../lib/contaminants";
 import type { IntakeParameters, RiskResult } from "../../lib/types/types";
+import { calculatorInputSchema } from "../../lib/schemas";
+
 
 export default function Calculadora() {
   const [contaminant, setContaminant] = useState("");
@@ -14,66 +17,78 @@ export default function Calculadora() {
   const [bwValue, setBwValue] = useState("");
   const [atValue, setAtValue] = useState("");
   const [result, setResult] = useState<RiskResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const allContaminants = useMemo(() => listContaminants(), []);
-
   const filteredContaminants = useMemo(() => {
-    if (contaminant === "") {
-      // Se o campo estiver vazio, mostre a lista completa
-      return allContaminants;
-    }
-
+    if (contaminant === "") return allContaminants;
     return allContaminants.filter((name) =>
-      name.toLowerCase().includes(contaminant.toLowerCase()),
+      name.toLowerCase().includes(contaminant.toLowerCase())
     );
   }, [contaminant, allContaminants]);
 
   const handleCalculate = () => {
-    if (!contaminant) {
-      alert("Por favor, selecione um contaminante.");
-      return;
-    }
+    setError(null);
+    setResult(null);
 
-    const params: IntakeParameters = {
+    const parsed = calculatorInputSchema.safeParse({
+      contaminant,
       C: Number(cValue),
       IR: Number(irValue),
       EF: Number(efValue),
       ED: Number(edValue),
       BW: Number(bwValue),
       AT: Number(atValue),
-    };
+    });
 
-    if (Object.values(params).some((v) => isNaN(v) || v < 0)) {
-      alert("Erro: preencha todos os campos com números válidos e positivos.");
-      return;
-    }
+    if (!parsed.success) {
+  const issues = parsed.error?.issues ?? [];
+  const messages = issues.map((err) => err.message);
+  setError(messages.join("\n") || "Erro de validação nos campos.");
+  return;
+}
 
-    if (params.BW === 0 || params.AT === 0) {
-      alert("Erro: Peso corporal e tempo médio não podem ser zero.");
-      return;
-    }
+    const { contaminant: cont, ...params } = parsed.data;
 
-    const rfd = getRfD(contaminant);
+    const rfd = getRfD(cont);
     if (!rfd) {
-      alert(`Erro: O contaminante "${contaminant}" não foi encontrado.`);
+      setError(`Erro: O contaminante "${cont}" não foi encontrado.`);
       return;
     }
 
-    const calculationResult = calculateRisk(rfd, params);
+    const calculationResult = calculateRisk(rfd, params as IntakeParameters);
     setResult(calculationResult);
+  };
+
+  const handleReset = () => {
+    setContaminant("");
+    setCValue("");
+    setIrValue("");
+    setEfValue("");
+    setEdValue("");
+    setBwValue("");
+    setAtValue("");
+    setResult(null);
+    setError(null);
   };
 
   return (
     <main className="min-h-screen bg-gradient-to-t from-white to-lime-100 flex flex-col py-10">
-      <div className=" bg-white rounded-lg shadow p-6  sm:w-3/4 lg:w-1/2 mx-auto">
+      <div className="bg-white rounded-lg shadow p-6 sm:w-3/4 lg:w-1/2 mx-auto">
         <h1 className="text-center text-gray-700 text-2xl font-bold mb-6">
           Calculadora de Risco Não-Cancerígeno
         </h1>
 
+        {error && (
+          <div className="text-red-700 bg-red-100 border border-red-300 rounded-lg p-3 mb-4">
+            {error}
+          </div>
+        )}
+
+        {/* Campo de busca do contaminante */}
         <div className="mb-4 relative">
-          {" "}
           <label
             htmlFor="contaminant"
             className="block mb-2 font-semibold text-gray-700"
@@ -120,34 +135,17 @@ export default function Calculadora() {
           )}
         </div>
 
+        {/* Campos numéricos */}
         {[
-          {
-            id: "C",
-            label: "C (mg/L ou mg/kg):",
-            value: cValue,
-            set: setCValue,
-          },
-          {
-            id: "IR",
-            label: "IR (L/dia ou kg/dia):",
-            value: irValue,
-            set: setIrValue,
-          },
-          {
-            id: "EF",
-            label: "EF (dias/ano):",
-            value: efValue,
-            set: setEfValue,
-          },
+          { id: "C", label: "C (mg/L ou mg/kg):", value: cValue, set: setCValue },
+          { id: "IR", label: "IR (L/dia ou kg/dia):", value: irValue, set: setIrValue },
+          { id: "EF", label: "EF (dias/ano):", value: efValue, set: setEfValue },
           { id: "ED", label: "ED (anos):", value: edValue, set: setEdValue },
           { id: "BW", label: "BW (kg):", value: bwValue, set: setBwValue },
           { id: "AT", label: "AT (dias):", value: atValue, set: setAtValue },
         ].map(({ id, label, value, set }) => (
           <div key={id} className="mb-4">
-            <label
-              htmlFor={id}
-              className="block mb-2 font-semibold text-gray-700"
-            >
+            <label htmlFor={id} className="block mb-2 font-semibold text-gray-700">
               {label}
             </label>
             <input
@@ -162,21 +160,30 @@ export default function Calculadora() {
           </div>
         ))}
 
-        <button
-          onClick={handleCalculate}
-          className="w-full py-3 bg-lime-600 hover:bg-lime-700 text-white rounded-lg font-semibold transition-colors duration-300"
-        >
-          Calcular
-        </button>
+        {/* Botões */}
+        <div className="flex flex-col sm:flex-row gap-3 mt-4">
+          <button
+            onClick={handleCalculate}
+            className="flex-1 py-3 bg-lime-600 hover:bg-lime-700 text-white rounded-lg font-semibold transition-colors duration-300"
+          >
+            Calcular
+          </button>
+          <button
+            onClick={handleReset}
+            className="flex-1 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-semibold transition-colors duration-300"
+          >
+            Limpar
+          </button>
+        </div>
 
+        {/* Resultado */}
         {result && (
           <div className="mt-6 p-4 bg-white border border-lime-600 rounded-lg transition-colors duration-300">
             <h3 className="text-gray-700 font-bold mb-2">
               Resultado da Análise:
             </h3>
             <p>
-              <strong>Ingestão (I):</strong> {result.I.toExponential(4)}{" "}
-              mg/(kg·dia)
+              <strong>Ingestão (I):</strong> {result.I.toExponential(4)} mg/(kg·dia)
             </p>
             <p>
               <strong>Quociente de Risco (QR):</strong> {result.QR.toFixed(4)}
